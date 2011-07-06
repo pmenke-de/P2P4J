@@ -19,10 +19,41 @@
 
 package de.philippmenke.p2p4j;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * @author Philipp
  *
  */
 public class Node {
+	private UUID uuid;
+	private InetAddress initGroup;
+	private static final Logger log = Logger.getLogger(Node.class.getName());
+	
+	Node(){
+		uuid = UUID.randomUUID();
+		try{
+			initGroup = InetAddress.getByName("FF12::dead:beef");
+		}catch(UnknownHostException e){
+			//Should never happen
+			initGroup = null;
+			log.log(Level.SEVERE,e.getLocalizedMessage(),e);
+		}
+	}
 
+	public UUID getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(UUID uuid) {
+		this.uuid = uuid;
+	}
+
+	public InetAddress getInitGroup() {
+		return initGroup;
+	}
 }
